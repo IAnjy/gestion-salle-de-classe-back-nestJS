@@ -15,8 +15,12 @@ model User {
 
   createdAt DateTime @default(now())
 
-  username String
+  username String @unique
   password String
+
+  professeurs Professeur[]
+
+  @@map("users")
 }
 
 model Professeur {
@@ -26,4 +30,9 @@ model Professeur {
   nom      String
   prenom   String
   grade    String
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("professeurs")
 }
