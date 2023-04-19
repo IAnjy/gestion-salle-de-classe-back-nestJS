@@ -36,3 +36,15 @@ model Professeur {
 
   @@map("professeurs")
 }
+
+model Salle {
+  id Int @id @default(autoincrement())
+
+  codesal     String
+  designation String
+
+  // userId Int
+  // user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("salles")
+}
