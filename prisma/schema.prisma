@@ -18,7 +18,7 @@ model User {
   username String @unique
   password String
 
-  professeurs Professeur[]
+  // professeurs Professeur[]
 
   @@map("users")
 }
@@ -31,8 +31,8 @@ model Professeur {
   prenom   String
   grade    String
 
-  userId Int
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // userId Int
+  // user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("professeurs")
 }
