@@ -30,10 +30,10 @@ export class ProfesseurController {
 
   @Post()
   createProfesseur(
-    // @GetUser('id') userId: number,
+    @GetUser('id') id: number,
     @Body() dto: CreateProfesseurDto,
   ) {
-    return this.professeurService.createProfesseur(dto);
+    return this.professeurService.createProfesseur(id, dto);
   }
 
   @Put(':id')

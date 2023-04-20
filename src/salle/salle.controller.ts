@@ -14,6 +14,7 @@ import { SalleService } from './salle.service';
 import { EditProfesseurDto } from 'src/professeur/dto';
 import { EditSalleDto } from './dto/edit-salle.dto';
 import { CreateSalleDto } from './dto/create-salle.dto';
+import { GetUser } from 'src/auth/decorator/get-user.decorator';
 
 @UseGuards(JwtGuard)
 @Controller('salles')
@@ -30,11 +31,8 @@ export class SalleController {
   }
 
   @Post()
-  createSalle(
-    // @GetUser('id') userId: number,
-    @Body() dto: CreateSalleDto,
-  ) {
-    return this.salleService.createSalle(dto);
+  createSalle(@GetUser('id') userId: number, @Body() dto: CreateSalleDto) {
+    return this.salleService.createSalle(userId, dto);
   }
 
   @Put(':id')

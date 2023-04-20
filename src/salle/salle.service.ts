@@ -15,8 +15,8 @@ export class SalleService {
     return this.prisma.salle.findUnique({ where: { id: salleId } });
   }
 
-  async createSalle(dto: CreateSalleDto) {
-    const salle = await this.prisma.salle.create({ data: dto });
+  async createSalle(userId: number, dto: CreateSalleDto) {
+    const salle = await this.prisma.salle.create({ data: { userId, ...dto } });
     return salle;
   }
 

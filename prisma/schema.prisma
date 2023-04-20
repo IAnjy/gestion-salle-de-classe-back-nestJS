@@ -18,7 +18,9 @@ model User {
   username String @unique
   password String
 
-  // professeurs Professeur[]
+  professeurs Professeur[]
+  salles      Salle[]
+  occuper     Occuper[]
 
   @@map("users")
 }
@@ -26,13 +28,15 @@ model User {
 model Professeur {
   id Int @id @default(autoincrement())
 
-  codeprof String
+  codeprof String @unique
   nom      String
   prenom   String
   grade    String
 
-  // userId Int
-  // user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  occuper Occuper?
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("professeurs")
 }
@@ -40,11 +44,34 @@ model Professeur {
 model Salle {
   id Int @id @default(autoincrement())
 
-  codesal     String
+  codesal     String @unique
   designation String
 
-  // userId Int
-  // user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  occuper Occuper?
+
+  userId Int
+  User   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("salles")
 }
+
+model Occuper {
+  id Int @id @default(autoincrement())
+
+  idprof     Int        @unique
+  professeur Professeur @relation(fields: [idprof], references: [id])
+
+  idsal Int   @unique
+  salle Salle @relation(fields: [idsal], references: [id])
+
+  date DateTime
+
+  userId Int
+  User   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("occuper")
+}
+
+// model professeur_audit {
+
+// }

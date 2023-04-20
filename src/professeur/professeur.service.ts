@@ -14,8 +14,10 @@ export class ProfesseurService {
     return this.prisma.professeur.findUnique({ where: { id: professeurId } });
   }
 
-  async createProfesseur(dto: CreateProfesseurDto) {
-    const prof = await this.prisma.professeur.create({ data: dto });
+  async createProfesseur(userId: number, dto: CreateProfesseurDto) {
+    const prof = await this.prisma.professeur.create({
+      data: { userId, ...dto },
+    });
     return prof;
   }
 
