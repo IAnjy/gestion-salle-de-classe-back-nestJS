@@ -7,6 +7,9 @@ import { ProfesseurModule } from './professeur/professeur.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { SalleModule } from './salle/salle.module';
 import { OccuperModule } from './occuper/occuper.module';
+import { ProfesseurAuditModule } from './professeur_audit/professeur_audit.module';
+import { SalleAuditModule } from './salle_audit/salle_audit.module';
+import { OccuperAuditModule } from './occuper_audit/occuper_audit.module';
 
 @Module({
   imports: [
@@ -17,6 +20,9 @@ import { OccuperModule } from './occuper/occuper.module';
     PrismaModule,
     SalleModule,
     OccuperModule,
+    ProfesseurAuditModule,
+    SalleAuditModule,
+    OccuperAuditModule,
   ],
 })
 export class AppModule {}

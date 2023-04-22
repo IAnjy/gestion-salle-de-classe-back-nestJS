@@ -7,17 +7,17 @@ export class OccuperService {
   constructor(private prisma: PrismaService) {}
 
   getOccuper() {
-    return this.prisma.occuper.findMany();
+    return this.prisma.occuper.findMany({ orderBy: [{ id: 'asc' }] });
   }
 
   getOccuperbyID(occuperId: number) {
     return this.prisma.occuper.findUnique({ where: { id: occuperId } });
   }
 
-  //   async createOccuper(userId: number, dto: CreateOccuperDto) {
-  //     const occuper = this.prisma.occuper.create({ data: { userId, ...dto } });
-  //     return occuper;
-  //   }
+  async createOccuper(userid: number, dto: CreateOccuperDto) {
+    const occuper = this.prisma.occuper.create({ data: { userid, ...dto } });
+    return occuper;
+  }
 
   async editOccuper(occuperId: number, dto: EditOccuperDto) {
     // const prof = await this.prisma.professeur.findUnique({ where: { id: professeurId } })

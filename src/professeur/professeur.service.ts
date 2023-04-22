@@ -7,16 +7,18 @@ export class ProfesseurService {
   constructor(private prisma: PrismaService) {}
 
   getProfesseurs() {
-    return this.prisma.professeur.findMany();
+    return this.prisma.professeur.findMany({
+      orderBy: [{ id: 'asc' }],
+    });
   }
 
   getProfesseurbyID(professeurId: number) {
     return this.prisma.professeur.findUnique({ where: { id: professeurId } });
   }
 
-  async createProfesseur(userId: number, dto: CreateProfesseurDto) {
+  async createProfesseur(userid: number, dto: CreateProfesseurDto) {
     const prof = await this.prisma.professeur.create({
-      data: { userId, ...dto },
+      data: { userid, ...dto },
     });
     return prof;
   }
@@ -29,7 +31,7 @@ export class ProfesseurService {
     });
   }
 
-  deleteProfesseur(professeurId: number) {
-    return this.prisma.professeur.delete({ where: { id: professeurId } });
+  deleteProfesseur(profid: number) {
+    return this.prisma.professeur.delete({ where: { id: profid } });
   }
 }

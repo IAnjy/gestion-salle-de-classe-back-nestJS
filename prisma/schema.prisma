@@ -33,10 +33,10 @@ model Professeur {
   prenom   String
   grade    String
 
-  occuper Occuper?
+  occuper Occuper[]
 
-  userId Int
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userid Int
+  user   User @relation(fields: [userid], references: [id], onDelete: Cascade)
 
   @@map("professeurs")
 }
@@ -47,10 +47,10 @@ model Salle {
   codesal     String @unique
   designation String
 
-  occuper Occuper?
+  occuper Occuper[]
 
-  userId Int
-  User   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userid Int
+  User   User @relation(fields: [userid], references: [id], onDelete: Cascade)
 
   @@map("salles")
 }
@@ -58,20 +58,63 @@ model Salle {
 model Occuper {
   id Int @id @default(autoincrement())
 
-  idprof     Int        @unique
+  idprof     Int
   professeur Professeur @relation(fields: [idprof], references: [id])
 
-  idsal Int   @unique
+  idsal Int
   salle Salle @relation(fields: [idsal], references: [id])
 
-  date DateTime
+  date String
 
-  userId Int
-  User   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userid Int
+  User   User @relation(fields: [userid], references: [id], onDelete: Cascade)
 
   @@map("occuper")
 }
 
-// model professeur_audit {
+model Professeur_audit {
+  id             Int      @id @default(autoincrement())
+  type_operation String
+  utilisateur    Int?
+  old_codeprof   String?
+  old_nom        String?
+  old_prenom     String?
+  old_grade      String?
+  new_codeprof   String?
+  new_nom        String?
+  new_prenom     String?
+  new_grade      String?
+  date_maj       DateTime
 
-// }
+  @@map("professeur_audit")
+}
+
+model Salle_audit {
+  id              Int      @id @default(autoincrement())
+  type_operation  String
+  utilisateur     Int?
+  old_codesal     String?
+  old_designation String?
+  new_codesal     String?
+  new_designation String?
+  date_maj        DateTime
+
+  @@map("salle_audit")
+}
+
+model Occuper_audit {
+  id             Int    @id @default(autoincrement())
+  type_operation String
+  utilisateur    Int?
+
+  old_prof Int?
+  old_sal  Int?
+  old_date String?
+  new_prof Int?
+  new_sal  Int?
+  new_date String?
+
+  date_maj DateTime
+
+  @@map("occuper_audit")
+}

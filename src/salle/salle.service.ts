@@ -8,15 +8,15 @@ export class SalleService {
   constructor(private prisma: PrismaService) {}
 
   getSalles() {
-    return this.prisma.salle.findMany();
+    return this.prisma.salle.findMany({ orderBy: [{ id: 'asc' }] });
   }
 
   getSallebyID(salleId: number) {
     return this.prisma.salle.findUnique({ where: { id: salleId } });
   }
 
-  async createSalle(userId: number, dto: CreateSalleDto) {
-    const salle = await this.prisma.salle.create({ data: { userId, ...dto } });
+  async createSalle(userid: number, dto: CreateSalleDto) {
+    const salle = await this.prisma.salle.create({ data: { userid, ...dto } });
     return salle;
   }
 

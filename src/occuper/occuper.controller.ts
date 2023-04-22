@@ -30,8 +30,8 @@ export class OccuperController {
   }
 
   @Post()
-  createOccuper(@GetUser('id') id: number, @Body() dto: CreateOccuperDto) {
-    // return this.occuperService.createOccuper(id, dto);
+  createOccuper(@GetUser('id') userid: number, @Body() dto: CreateOccuperDto) {
+    return this.occuperService.createOccuper(userid, dto);
   }
 
   @Put(':id')

@@ -1,15 +1,15 @@
-import { IsDate, IsNotEmpty, IsNumber } from 'class-validator';
+import { IsDate, IsInt, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateOccuperDto {
   @IsNotEmpty()
-  @IsNumber()
+  @IsInt()
   idprof: number;
 
   @IsNotEmpty()
-  @IsNumber()
+  @IsInt()
   idsal: number;
 
   @IsNotEmpty()
-  @IsDate()
-  date: Date;
+  @IsString()
+  date: string;
 }
