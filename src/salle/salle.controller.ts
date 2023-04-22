@@ -31,20 +31,28 @@ export class SalleController {
   }
 
   @Post()
-  createSalle(@GetUser('id') userId: number, @Body() dto: CreateSalleDto) {
-    return this.salleService.createSalle(userId, dto);
+  createSalle(
+    @GetUser('username') username: string,
+    @Body() dto: CreateSalleDto,
+  ) {
+    return this.salleService.createSalle(username, dto);
   }
 
   @Put(':id')
   editSalle(
     @Body() dto: EditSalleDto,
+    @GetUser('username') username: string,
     @Param('id', ParseIntPipe) salleId: number,
   ) {
-    return this.salleService.editSalle(salleId, dto);
+    return this.salleService.editSalle(salleId, username, dto);
   }
 
   @Delete(':id')
-  deleteSalle(@Param('id', ParseIntPipe) salleId: number) {
-    return this.salleService.deleteSalle(salleId);
+  deleteSalle(
+    @Param('id', ParseIntPipe) salleId: number,
+    @GetUser('username') username: string,
+    @Body() dto: EditProfesseurDto,
+  ) {
+    return this.salleService.deleteSalle(salleId, username, dto);
   }
 }

@@ -30,16 +30,20 @@ export class OccuperController {
   }
 
   @Post()
-  createOccuper(@GetUser('id') userid: number, @Body() dto: CreateOccuperDto) {
-    return this.occuperService.createOccuper(userid, dto);
+  createOccuper(
+    @GetUser('username') username: string,
+    @Body() dto: CreateOccuperDto,
+  ) {
+    return this.occuperService.createOccuper(username, dto);
   }
 
   @Put(':id')
   editOccuper(
     @Body() dto: EditOccuperDto,
+    @GetUser('username') username: string,
     @Param('id', ParseIntPipe) occuperId: number,
   ) {
-    return this.occuperService.editOccuper(occuperId, dto);
+    return this.occuperService.editOccuper(occuperId, username, dto);
   }
 
   @Delete(':id')

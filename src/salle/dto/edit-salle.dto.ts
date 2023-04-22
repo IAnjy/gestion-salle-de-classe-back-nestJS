@@ -8,4 +8,8 @@ export class EditSalleDto {
   @IsString()
   @IsOptional()
   designation?: string;
+
+  @IsString()
+  @IsOptional()
+  username?: string;
 }

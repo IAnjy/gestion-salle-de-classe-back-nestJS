@@ -6,15 +6,15 @@ $body$
 BEGIN
 	IF TG_OP = 'DELETE' THEN
 		INSERT INTO professeur_audit (type_operation,utilisateur,old_codeprof, old_nom,old_prenom, old_grade, date_maj)
-		VALUES (TG_OP,OLD.userid,  OLD.codeprof, OLD.nom, OLD.prenom, OLD.grade, NOW() );
+		VALUES (TG_OP,OLD.username,  OLD.codeprof, OLD.nom, OLD.prenom, OLD.grade, NOW() );
 		RETURN OLD;
 	ELSIF TG_OP = 'INSERT' THEN
 		INSERT INTO professeur_audit (type_operation,utilisateur, new_codeprof,  new_nom,new_prenom, new_grade, date_maj)
-		VALUES (TG_OP,NEW.userid,  NEW.codeprof, NEW.nom, NEW.prenom, NEW.grade, NOW() );
+		VALUES (TG_OP,NEW.username,  NEW.codeprof, NEW.nom, NEW.prenom, NEW.grade, NOW() );
 		RETURN NEW;
 	ELSIF TG_OP = 'UPDATE' AND ( NEW.codeprof <> OLD.codeprof OR NEW.nom <> OLD.nom OR  NEW.prenom <>OLD.prenom OR  NEW.grade <>OLD.grade ) THEN
 		INSERT INTO professeur_audit (type_operation, utilisateur, old_codeprof, old_nom,old_prenom, old_grade, new_codeprof, new_nom,new_prenom, new_grade, date_maj)
-		VALUES (TG_OP, OLD.userid, OLD.codeprof, OLD.nom, OLD.prenom, OLD.grade, NEW.codeprof, NEW.nom, NEW.prenom, NEW.grade, NOW());
+		VALUES (TG_OP, OLD.username, OLD.codeprof, OLD.nom, OLD.prenom, OLD.grade, NEW.codeprof, NEW.nom, NEW.prenom, NEW.grade, NOW());
 		RETURN NEW;
 	END IF;
 	
@@ -56,15 +56,15 @@ $body$
 BEGIN
 	IF TG_OP = 'DELETE' THEN
 		INSERT INTO occuper_audit (type_operation,utilisateur,old_prof, old_sal, old_date,date_maj)
-		VALUES (TG_OP,OLD.userid,  OLD.idprof, OLD.idsal, OLD.date, NOW() );
+		VALUES (TG_OP,OLD.username,  OLD.codeprof, OLD.codesal, OLD.date, NOW() );
 		RETURN OLD;
 	ELSIF TG_OP = 'INSERT' THEN
 		INSERT INTO occuper_audit (type_operation,utilisateur, new_prof,  new_sal, new_date, date_maj)
-		VALUES (TG_OP,NEW.userid,  NEW.idprof, NEW.idsal, NEW.date, NOW() );
+		VALUES (TG_OP,NEW.username,  NEW.codeprof, NEW.codesal, NEW.date, NOW() );
 		RETURN NEW;
-	ELSIF TG_OP = 'UPDATE' AND ( NEW.idprof <> OLD.idprof OR NEW.idsal <> OLD.idsal  OR NEW.date <> OLD.date ) THEN
+	ELSIF TG_OP = 'UPDATE' AND ( NEW.codeprof <> OLD.codeprof OR NEW.codesal <> OLD.codesal  OR NEW.date <> OLD.date ) THEN
 		INSERT INTO occuper_audit (type_operation, utilisateur, old_prof, old_sal,old_date, new_prof, new_sal, new_date, date_maj)
-		VALUES (TG_OP, OLD.userid, OLD.idprof, OLD.idsal, OLD.date,  NEW.idprof, NEW.idsal, NEW.date, NOW());
+		VALUES (TG_OP, OLD.username, OLD.codeprof, OLD.codesal, OLD.date,  NEW.codeprof, NEW.codesal, NEW.date, NOW());
 		RETURN NEW;
 	END IF;
 	

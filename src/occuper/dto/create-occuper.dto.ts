@@ -2,12 +2,12 @@ import { IsDate, IsInt, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateOccuperDto {
   @IsNotEmpty()
-  @IsInt()
-  idprof: number;
+  @IsString()
+  codeprof: string;
 
   @IsNotEmpty()
-  @IsInt()
-  idsal: number;
+  @IsString()
+  codesal: string;
 
   @IsNotEmpty()
   @IsString()

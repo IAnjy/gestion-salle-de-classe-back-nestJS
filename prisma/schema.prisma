@@ -18,9 +18,9 @@ model User {
   username String @unique
   password String
 
-  professeurs Professeur[]
-  salles      Salle[]
-  occuper     Occuper[]
+  Salle      Salle[]
+  Occuper    Occuper[]
+  Professeur Professeur[]
 
   @@map("users")
 }
@@ -33,10 +33,10 @@ model Professeur {
   prenom   String
   grade    String
 
-  occuper Occuper[]
+  username String
+  user     User   @relation(fields: [username], references: [username])
 
-  userid Int
-  user   User @relation(fields: [userid], references: [id], onDelete: Cascade)
+  occuper Occuper[]
 
   @@map("professeurs")
 }
@@ -47,10 +47,10 @@ model Salle {
   codesal     String @unique
   designation String
 
-  occuper Occuper[]
+  username String
+  user     User   @relation(fields: [username], references: [username], onDelete: Cascade)
 
-  userid Int
-  User   User @relation(fields: [userid], references: [id], onDelete: Cascade)
+  occuper Occuper[]
 
   @@map("salles")
 }
@@ -58,16 +58,16 @@ model Salle {
 model Occuper {
   id Int @id @default(autoincrement())
 
-  idprof     Int
-  professeur Professeur @relation(fields: [idprof], references: [id])
+  codeprof   String
+  professeur Professeur @relation(fields: [codeprof], references: [codeprof])
 
-  idsal Int
-  salle Salle @relation(fields: [idsal], references: [id])
+  codesal String
+  salle   Salle  @relation(fields: [codesal], references: [codesal])
 
   date String
 
-  userid Int
-  User   User @relation(fields: [userid], references: [id], onDelete: Cascade)
+  username String
+  user     User   @relation(fields: [username], references: [username], onDelete: Cascade)
 
   @@map("occuper")
 }
@@ -75,7 +75,7 @@ model Occuper {
 model Professeur_audit {
   id             Int      @id @default(autoincrement())
   type_operation String
-  utilisateur    Int?
+  utilisateur    String?
   old_codeprof   String?
   old_nom        String?
   old_prenom     String?
@@ -92,7 +92,7 @@ model Professeur_audit {
 model Salle_audit {
   id              Int      @id @default(autoincrement())
   type_operation  String
-  utilisateur     Int?
+  utilisateur     String?
   old_codesal     String?
   old_designation String?
   new_codesal     String?
@@ -103,15 +103,15 @@ model Salle_audit {
 }
 
 model Occuper_audit {
-  id             Int    @id @default(autoincrement())
+  id             Int     @id @default(autoincrement())
   type_operation String
-  utilisateur    Int?
+  utilisateur    String?
 
-  old_prof Int?
-  old_sal  Int?
+  old_prof String?
+  old_sal  String?
   old_date String?
-  new_prof Int?
-  new_sal  Int?
+  new_prof String?
+  new_sal  String?
   new_date String?
 
   date_maj DateTime

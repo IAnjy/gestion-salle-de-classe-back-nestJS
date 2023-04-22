@@ -30,18 +30,19 @@ export class ProfesseurController {
 
   @Post()
   createProfesseur(
-    @GetUser('id') id: number,
+    @GetUser('username') username: string,
     @Body() dto: CreateProfesseurDto,
   ) {
-    return this.professeurService.createProfesseur(id, dto);
+    return this.professeurService.createProfesseur(username, dto);
   }
 
   @Put(':id')
   editProfesseur(
-    @Body() dto: EditProfesseurDto,
     @Param('id', ParseIntPipe) professeurId: number,
+    @GetUser('username') username: string,
+    @Body() dto: EditProfesseurDto,
   ) {
-    return this.professeurService.editProfesseur(professeurId, dto);
+    return this.professeurService.editProfesseur(professeurId, username, dto);
   }
 
   @Delete(':id')

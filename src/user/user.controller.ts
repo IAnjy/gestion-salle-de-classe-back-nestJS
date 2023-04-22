@@ -9,13 +9,10 @@ import { User } from '@prisma/client';
 @Controller('users')
 export class UserController {
   @Get('me')
-  getMe(
-    @GetUser() user: User,
-    // @GetUser('id') id: number
-  ) {
-    // console.log({
-    //   id,
-    // });
+  getMe(@GetUser() user: User, @GetUser('username') username: string) {
+    console.log({
+      username,
+    });
     return user;
   }
 }

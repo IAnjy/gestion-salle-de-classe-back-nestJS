@@ -16,4 +16,8 @@ export class EditProfesseurDto {
   @IsString()
   @IsOptional()
   grade?: string;
+
+  @IsString()
+  @IsOptional()
+  username?: string;
 }

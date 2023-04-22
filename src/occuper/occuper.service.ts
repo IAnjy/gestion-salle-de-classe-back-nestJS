@@ -14,13 +14,14 @@ export class OccuperService {
     return this.prisma.occuper.findUnique({ where: { id: occuperId } });
   }
 
-  async createOccuper(userid: number, dto: CreateOccuperDto) {
-    const occuper = this.prisma.occuper.create({ data: { userid, ...dto } });
+  async createOccuper(username: string, dto: CreateOccuperDto) {
+    const occuper = this.prisma.occuper.create({ data: { username, ...dto } });
     return occuper;
   }
 
-  async editOccuper(occuperId: number, dto: EditOccuperDto) {
+  async editOccuper(occuperId: number, username: string, dto: EditOccuperDto) {
     // const prof = await this.prisma.professeur.findUnique({ where: { id: professeurId } })
+    dto.username = username;
     return this.prisma.occuper.update({
       where: { id: occuperId },
       data: { ...dto },

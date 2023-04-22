@@ -16,14 +16,19 @@ export class ProfesseurService {
     return this.prisma.professeur.findUnique({ where: { id: professeurId } });
   }
 
-  async createProfesseur(userid: number, dto: CreateProfesseurDto) {
+  async createProfesseur(username: string, dto: CreateProfesseurDto) {
     const prof = await this.prisma.professeur.create({
-      data: { userid, ...dto },
+      data: { username, ...dto },
     });
     return prof;
   }
 
-  async editProfesseur(professeurId: number, dto: EditProfesseurDto) {
+  async editProfesseur(
+    professeurId: number,
+    username: string,
+    dto: EditProfesseurDto,
+  ) {
+    dto.username = username;
     // const prof = await this.prisma.professeur.findUnique({ where: { id: professeurId } })
     return this.prisma.professeur.update({
       where: { id: professeurId },
@@ -32,6 +37,7 @@ export class ProfesseurService {
   }
 
   deleteProfesseur(profid: number) {
+    // const prof = this.prisma.professeur.findUnique({ where: { id: profid } });
     return this.prisma.professeur.delete({ where: { id: profid } });
   }
 }

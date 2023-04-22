@@ -2,14 +2,18 @@ import { IsDate, IsInt, IsOptional, IsString } from 'class-validator';
 
 export class EditOccuperDto {
   @IsOptional()
-  @IsInt()
-  idprof?: number;
+  @IsString()
+  codeprof?: string;
 
   @IsOptional()
-  @IsInt()
-  idsal?: number;
+  @IsString()
+  codesal?: string;
 
   @IsOptional()
   @IsString()
   date?: string;
+
+  @IsString()
+  @IsOptional()
+  username?: string;
 }
