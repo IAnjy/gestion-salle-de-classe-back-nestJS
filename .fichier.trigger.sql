@@ -1,3 +1,4 @@
+--------------------------------------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION audit_prof_function()
 	RETURNS TRIGGER
 	LANGUAGE PLPGSQL
@@ -21,7 +22,6 @@ BEGIN
 END;
 $body$
 
---------------------------------------- salle --------------------------------------
 
 CREATE OR REPLACE FUNCTION audit_salle_function()
 	RETURNS TRIGGER
@@ -31,15 +31,15 @@ $body$
 BEGIN
 	IF TG_OP = 'DELETE' THEN
 		INSERT INTO salle_audit (type_operation,utilisateur,old_codesal, old_designation ,date_maj)
-		VALUES (TG_OP,OLD.userid,  OLD.codesal, OLD.designation, NOW() );
+		VALUES (TG_OP,OLD.username,  OLD.codesal, OLD.designation, NOW() );
 		RETURN OLD;
 	ELSIF TG_OP = 'INSERT' THEN
 		INSERT INTO salle_audit (type_operation,utilisateur, new_codesal,  new_designation, date_maj)
-		VALUES (TG_OP,NEW.userid,  NEW.codesal, NEW.designation, NOW() );
+		VALUES (TG_OP,NEW.username,  NEW.codesal, NEW.designation, NOW() );
 		RETURN NEW;
 	ELSIF TG_OP = 'UPDATE' AND ( NEW.codesal <> OLD.codesal OR NEW.designation <> OLD.designation ) THEN
 		INSERT INTO salle_audit (type_operation, utilisateur, old_codesal, old_designation, new_codesal, new_designation, date_maj)
-		VALUES (TG_OP, OLD.userid, OLD.codesal, OLD.designation, NEW.codesal, NEW.codesal, NOW());
+		VALUES (TG_OP, OLD.username, OLD.codesal, OLD.designation, NEW.codesal, NEW.designation, NOW());
 		RETURN NEW;
 	END IF;
 	
@@ -71,8 +71,6 @@ BEGIN
 END;
 $body$
 
-
-
 CREATE TRIGGER audit_prof
 	BEFORE UPDATE 
 	on professeurs
@@ -90,9 +88,8 @@ CREATE TRIGGER audit_prof_on_insert
 	on professeurs
 	FOR EACH ROW 
 	EXECUTE PROCEDURE audit_prof_function();
-
-
-
+	
+	
 CREATE TRIGGER audit_salle
 	BEFORE UPDATE 
 	on salles
@@ -110,11 +107,8 @@ CREATE TRIGGER audit_salle_on_insert
 	on salles
 	FOR EACH ROW 
 	EXECUTE PROCEDURE audit_salle_function();
-
-
 	
-
-CREATE TRIGGER audit_occuper
+	CREATE TRIGGER audit_occuper
 	BEFORE UPDATE 
 	on occuper
 	FOR EACH ROW 
